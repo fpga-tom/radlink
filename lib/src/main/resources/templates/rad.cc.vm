@@ -1,0 +1,49 @@
+\#include<vector>
+\#include<boost/tuple/tuple.hpp>
+\#include<complex>
+\#include<string.h>
+
+std::complex<float> tmpvessel[$block.getCount()] = {0, };
+std::complex<float> vessel[$block.getCount()] = {0, };
+
+
+void mycgemv() {
+	memset(tmpvessel, 0, sizeof(tmpvessel));
+#foreach($t in $block.getMatrixMul().target())
+	tmpvessel[$t] = $block.getMatrixMul().algebra.dot.one;
+#end
+#foreach($m in $block.getMatrix())
+#foreach($t in $m.getMatrix())
+#if ($t.v == 1.0)
+	tmpvessel[$t.j] $CppOperation.get($m.algebra.sum)= vessel[$t.i];
+#else
+	tmpvessel[$t.j] $CppOperation.get($m.algebra.sum)= vessel[$t.i] $CppOperation.get($m.algebra.dot) (float)($t.v);
+#end
+#end
+#end
+	memcpy(vessel, tmpvessel, sizeof(vessel));
+}
+
+
+
+float step(std::complex<float> in) {
+	vessel[$block.getInput(0)] = in;
+	mycgemv();
+#foreach($m in $block.getMatrix())
+#foreach($op in $m.getOp()) 
+#if ($op.op.isUnary())
+	vessel[$op.vertex] = $CppOperation.get($op.op)(vessel[$op.vertex]);
+#else
+	vessel[$op.vertex] =
+#foreach($s in $block.getMatrixMul().source()) 
+	(vessel[$s])
+#if ($velocityCount < $block.getMatrixMul().source().size())
+	$CppOperation.get($op.op)
+#end
+#end
+;
+#end
+#end
+#end
+	return real(vessel[$block.getOutput(0)]);
+}
