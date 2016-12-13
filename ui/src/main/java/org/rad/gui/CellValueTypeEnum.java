@@ -2,7 +2,7 @@ package org.rad.gui;
 
 public enum CellValueTypeEnum {
 
-	COMPLEX("complex"), BOOL("bool");
+	INHERITED("inherited"), COMPLEX("complex"), BOOL("bool");
 
 	private String typeName;
 

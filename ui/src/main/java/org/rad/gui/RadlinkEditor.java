@@ -34,7 +34,7 @@ public class RadlinkEditor extends BasicGraphEditor {
 
 	public static final String appTitle = "Radlink";
 
-	public static final CellValueTypeEnum type = CellValueTypeEnum.COMPLEX;
+	public static final CellValueTypeEnum type = CellValueTypeEnum.INHERITED;
 
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
 
