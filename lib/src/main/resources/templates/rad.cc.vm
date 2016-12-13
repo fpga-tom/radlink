@@ -10,7 +10,7 @@ std::complex<float> vessel[$block.getCount()] = {0, };
 void mycgemv() {
 	memset(tmpvessel, 0, sizeof(tmpvessel));
 #foreach($t in $block.getMatrixMul().target())
-	tmpvessel[$t] = $block.getMatrixMul().algebra.dot.one;
+	tmpvessel[$t] = $block.getMatrixMul().algebra.dot.identity;
 #end
 #foreach($m in $block.getMatrix())
 #foreach($t in $m.getMatrix())

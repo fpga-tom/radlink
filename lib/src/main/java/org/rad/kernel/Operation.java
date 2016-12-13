@@ -9,11 +9,11 @@ public enum Operation {
 			Boolean.TRUE), OR(false, Boolean.FALSE);
 
 	private boolean unary;
-	private Object one;
+	private Object identity;
 
-	Operation(boolean unary, Object one) {
+	Operation(boolean unary, Object identity) {
 		this.unary = unary;
-		this.one = one;
+		this.identity = identity;
 	}
 
 	public static Operation fromString(String op) {
@@ -30,7 +30,7 @@ public enum Operation {
 		return unary;
 	}
 
-	public Object getOne() {
-		return one;
+	public Object getIdentity() {
+		return identity;
 	}
 }

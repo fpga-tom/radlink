@@ -1,0 +1,96 @@
+\#include<boost/tuple/tuple.hpp>
+\#include<boost/thread/thread.hpp>
+\#include<boost/thread/barrier.hpp>
+\#include<vector>
+\#include<complex>
+\#include<string.h>
+
+
+boost::condition_variable cond;
+boost::mutex mut;
+boost::barrier bar($barrier);
+bool data_ready = false;
+
+void wait_for_data_to_process()
+{
+    boost::unique_lock<boost::mutex> lock(mut);
+    while(!data_ready)
+    {
+        cond.wait(lock);
+    }
+}
+
+void prepare_data_for_processing()
+{
+	boost::lock_guard<boost::mutex> lock(mut);
+	data_ready=true;
+	cond.notify_all();
+}
+
+void data_processed() {
+	boost::lock_guard<boost::mutex> lock(mut);
+	data_ready=false;
+	cond.notify_all();
+}
+
+
+#foreach($l in $tiles)
+std::complex<float> tmpvessel_${l.tile}[$block.getCount()] = {0, };
+#end
+std::complex<float> vessel[$block.getCount()] = {0, };
+
+#foreach($l in $tiles)
+void mycgemv_${l.tile}() {
+for(;;) {
+	memset(tmpvessel_${l.tile}, 0, sizeof(tmpvessel_${l.tile}));
+	wait_for_data_to_process();
+#foreach($tm in $l.getMatrix())
+#foreach($lm in $tm.target())
+	tmpvessel_${l.tile}[$lm] = $tm.algebra.sum.identity;
+#end
+#end
+#foreach($m in $l.getMatrix())
+#foreach($t in $m.getMatrix())
+#if ($t.v == 1.0)
+	tmpvessel_${l.tile}[$t.j] $CppOperation.get($m.algebra.sum)= vessel[$t.i];
+#else
+	tmpvessel_${l.tile}[$t.j] $CppOperation.get($m.algebra.sum)= vessel[$t.i] $CppOperation.get($m.algebra.dot) (float)($t.v);
+#end
+#end
+
+#foreach($op in $m.getOp()) 
+#if ($op.op.isUnary())
+	tmpvessel_${l.tile}[$op.vertex] = $CppOperation.get($op.op)(tmpvessel_${l.tile}[$op.vertex]);
+#end
+#end
+
+#end
+	bar.wait();
+}
+}
+#end
+
+void radlink_init() {
+#foreach($l in $tiles)
+	boost::thread thread_${l.tile}(mycgemv_${l.tile});
+#end
+}
+
+float step(std::complex<float> in) {
+	vessel[$block.getInput(0)] = in;
+	
+	prepare_data_for_processing();
+	bar.wait();
+	data_processed();
+
+	memset(vessel, 0, sizeof(vessel));
+#foreach($i in [0..${block.getCount()}])
+#if($i < $block.getCount())
+#foreach($l in $tiles)
+	vessel[$i] += tmpvessel_${l.tile}[$i];
+#end
+#end
+#end
+
+	return real(vessel[$block.getOutput(0)]);
+}
