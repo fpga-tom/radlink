@@ -57,4 +57,12 @@ public class Matrix {
 	public void setAlgebra(Algebra algebra) {
 		this.algebra = algebra;
 	}
+
+	public boolean hasOperation(int vertex) {
+		return op.parallelStream().filter(p -> p.getVertex() == vertex).collect(Collectors.toList()).size() > 0;
+	}
+
+	public Operation getOperation(int vertex) {
+		return op.parallelStream().filter(p -> p.getVertex() == vertex).collect(Collectors.toList()).get(0).getOp();
+	}
 }

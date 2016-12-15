@@ -34,6 +34,7 @@ public class BlockBuilder {
 			Operation op = Operation.fromString(v.getValue());
 			if (op != null && op.isUnary()) {
 				result.addOperationSum(v.getId(), op);
+				result.addOperationMul(v.getId(), op);
 			}
 		}
 

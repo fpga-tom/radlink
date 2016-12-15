@@ -1,5 +1,6 @@
 package org.rad.kernel.cpp;
 
+import org.rad.kernel.Matrix;
 import org.rad.kernel.Operation;
 
 public class CppOperation {
@@ -22,7 +23,13 @@ public class CppOperation {
 			return "~";
 		if (Operation.SUM == op)
 			return "+";
-		return "nop";
+		return "";
+	}
+
+	public String get(Matrix m, int vertex) {
+		if (m.hasOperation(vertex))
+			return get(m.getOperation(vertex));
+		return "";
 	}
 
 }

@@ -38,6 +38,7 @@ public class CppThreadTranslator extends AbstractTranslator {
 		context.put("block", block);
 		context.put("tiles", tiles);
 		context.put("barrier", threadCount + 1);
+		context.put("threadCount", threadCount);
 		context.put("CppOperation", new CppOperation());
 		return merge();
 	}
