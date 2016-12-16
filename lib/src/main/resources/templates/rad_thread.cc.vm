@@ -24,7 +24,6 @@ void prepare_data_for_processing()
 
 void data_processed(int tile) {
 	counter[tile]--;
-	while(counter[tile] > 0) boost::thread::yield();
 }
 
 void wait_data_processed() {
