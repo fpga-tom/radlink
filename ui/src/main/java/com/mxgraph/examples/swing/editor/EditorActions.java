@@ -32,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -41,8 +42,13 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
+import javax.xml.bind.JAXBException;
 
-import org.rad.gui.CellProperties;
+import org.rad.App;
+import org.rad.gui.RadlinkEditor;
+import org.rad.gui.cell.CellProperties;
+import org.rad.gui.dialog.Options;
+import org.rad.gui.model.Radlink;
 import org.w3c.dom.Document;
 
 import com.mxgraph.analysis.mxAnalysisGraph;
@@ -1849,11 +1855,37 @@ public class EditorActions {
 				boolean oldDir = mxGraphProperties.isDirected(aGraph.getProperties(),
 						mxGraphProperties.DEFAULT_DIRECTED);
 				mxGraphProperties.setDirected(aGraph.getProperties(), true);
-				System.out.println("DFS test");
 
 				mxCodec codec = new mxCodec();
 				String xml = mxXmlUtils.getXml(codec.encode(graph.getModel()));
-				System.out.println(xml);
+				try {
+					Radlink radlink = ((RadlinkEditor) editor).getModel();
+					App.compileModel(radlink.getTranslator(), xml, new File(radlink.getOutputFile()));
+				} catch (JAXBException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		}
+	}
+
+	@SuppressWarnings("serial")
+	public static class OptionsAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		public void actionPerformed(ActionEvent e) {
+			BasicGraphEditor editor = getEditor(e);
+
+			if (editor != null) {
+				RadlinkEditor r = (RadlinkEditor) editor;
+				Options dialog = new Options();
+				dialog.setup(r.getModel());
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+
 			}
 		}
 	}

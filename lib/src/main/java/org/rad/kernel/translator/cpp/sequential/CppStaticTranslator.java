@@ -1,8 +1,8 @@
-package org.rad.kernel.cpp.sequential;
+package org.rad.kernel.translator.cpp.sequential;
 
 import org.rad.kernel.Block;
-import org.rad.kernel.cpp.AbstractTranslator;
-import org.rad.kernel.cpp.CppOperation;
+import org.rad.kernel.translator.AbstractTranslator;
+import org.rad.kernel.translator.cpp.CppOperation;
 
 public class CppStaticTranslator extends AbstractTranslator {
 

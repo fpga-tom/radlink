@@ -1,4 +1,4 @@
-package org.rad.kernel.cpp.parallel;
+package org.rad.kernel.translator.cpp.parallel;
 
 import org.rad.kernel.Pair;
 import org.rad.kernel.Tuple;

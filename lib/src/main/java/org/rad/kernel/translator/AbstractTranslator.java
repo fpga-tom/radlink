@@ -1,11 +1,10 @@
-package org.rad.kernel.cpp;
+package org.rad.kernel.translator;
 
 import java.io.StringWriter;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.rad.kernel.Translator;
 
 public abstract class AbstractTranslator implements Translator {
 

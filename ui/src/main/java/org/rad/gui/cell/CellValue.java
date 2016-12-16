@@ -1,4 +1,4 @@
-package org.rad.gui;
+package org.rad.gui.cell;
 
 import java.io.Serializable;
 

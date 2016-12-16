@@ -6,6 +6,8 @@
 std::complex<float> tmpvessel[$block.getCount()] = {0, };
 std::complex<float> vessel[$block.getCount()] = {0, };
 
+void radlink_init() {}
+
 
 void mycgemv() {
 	memset(tmpvessel, 0, sizeof(tmpvessel));
@@ -14,10 +16,10 @@ void mycgemv() {
 #end
 #foreach($m in $block.getMatrix())
 #foreach($t in $m.getMatrix())
-#if ($t.v == 1.0)
-	tmpvessel[$t.j] $CppOperation.get($m.algebra.sum)= vessel[$t.i];
+#if ($t.v == $m.algebra.dot.identity)
+	tmpvessel[$t.j] $CppOperation.get($m.algebra.sum)= $CppOperation.get($block, $t.i) (vessel[$t.i]);
 #else
-	tmpvessel[$t.j] $CppOperation.get($m.algebra.sum)= vessel[$t.i] $CppOperation.get($m.algebra.dot) (float)($t.v);
+	tmpvessel[$t.j] $CppOperation.get($m.algebra.sum)= $CppOperation.get($block, $t.i) (vessel[$t.i]) $CppOperation.get($m.algebra.dot) (float)($t.v);
 #end
 #end
 #end

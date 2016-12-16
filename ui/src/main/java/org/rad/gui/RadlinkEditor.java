@@ -9,6 +9,10 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
+import org.rad.gui.cell.CellValue;
+import org.rad.gui.cell.CellValueCodec;
+import org.rad.gui.cell.CellValueTypeEnum;
+import org.rad.gui.model.Radlink;
 import org.w3c.dom.Document;
 
 import com.mxgraph.examples.swing.GraphEditor;
@@ -38,15 +42,18 @@ public class RadlinkEditor extends BasicGraphEditor {
 
 	public static final NumberFormat numberFormat = NumberFormat.getInstance();
 
+	private Radlink model;
+
 	public RadlinkEditor() {
 		this(appTitle, new CustomGraphComponent(new CustomGraph()));
 	}
 
 	public RadlinkEditor(String appTitle, mxGraphComponent component) {
 		super(appTitle, component);
+		model = new Radlink();
 		EditorPalette palette = insertPalette(mxResources.get("commonly"));
 
-		mxCodecRegistry.addPackage("org.rad.gui");
+		mxCodecRegistry.addPackage("org.rad.gui.cell");
 		mxCodecRegistry.register(new CellValueCodec());
 
 		palette.addTemplate("Delay", new ImageIcon(RadlinkEditor.class.getResource("/org/rad/gui/delay.png")),
@@ -77,6 +84,14 @@ public class RadlinkEditor extends BasicGraphEditor {
 		RadlinkEditor editor = new RadlinkEditor();
 		editor.createFrame(new EditorMenuBar(editor)).setVisible(true);
 
+	}
+
+	public Radlink getModel() {
+		return model;
+	}
+
+	public void setModel(Radlink model) {
+		this.model = model;
 	}
 
 	public static class CustomGraphComponent extends mxGraphComponent {

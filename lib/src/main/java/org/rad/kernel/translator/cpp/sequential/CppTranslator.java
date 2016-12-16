@@ -1,7 +1,7 @@
-package org.rad.kernel.cpp.sequential;
+package org.rad.kernel.translator.cpp.sequential;
 
 import org.rad.kernel.Block;
-import org.rad.kernel.Translator;
+import org.rad.kernel.translator.Translator;
 
 public class CppTranslator implements Translator {
 	public String translate(Block block) {

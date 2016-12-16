@@ -1,5 +1,7 @@
 package org.rad.kernel;
 
+import org.rad.kernel.translator.Translator;
+
 public class Waveform {
 
 	Block masterBlock;

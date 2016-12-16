@@ -1,4 +1,4 @@
-package org.rad.kernel.cpp;
+package org.rad.kernel.translator.cpp;
 
 import org.rad.kernel.Block;
 import org.rad.kernel.Operation;

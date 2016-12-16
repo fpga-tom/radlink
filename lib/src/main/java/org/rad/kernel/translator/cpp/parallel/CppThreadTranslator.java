@@ -1,11 +1,11 @@
-package org.rad.kernel.cpp.parallel;
+package org.rad.kernel.translator.cpp.parallel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.rad.kernel.Block;
-import org.rad.kernel.cpp.AbstractTranslator;
-import org.rad.kernel.cpp.CppOperation;
+import org.rad.kernel.translator.AbstractTranslator;
+import org.rad.kernel.translator.cpp.CppOperation;
 
 public class CppThreadTranslator extends AbstractTranslator {
 
@@ -13,8 +13,11 @@ public class CppThreadTranslator extends AbstractTranslator {
 
 	private int threadCount = 1;
 
-	public CppThreadTranslator(int threadCount) {
+	public CppThreadTranslator() {
 		super(TEMPLATE);
+	}
+
+	public void setThreadCount(int threadCount) {
 		this.threadCount = threadCount;
 	}
 

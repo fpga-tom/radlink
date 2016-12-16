@@ -1,4 +1,4 @@
-package org.rad.kernel.cpp.parallel;
+package org.rad.kernel.translator.cpp.parallel;
 
 import java.util.ArrayList;
 import java.util.List;
