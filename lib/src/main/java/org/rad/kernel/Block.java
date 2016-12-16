@@ -2,6 +2,7 @@ package org.rad.kernel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Block {
 
@@ -10,6 +11,7 @@ public class Block {
 	private Specification specification = new Specification();
 	private int count;
 	private List<Matrix> matrix = new ArrayList<Matrix>();
+	private List<Pair> op = new ArrayList<Pair>();
 	public static final int SUM = 0;
 	public static final int MUL = 1;
 
@@ -44,6 +46,9 @@ public class Block {
 			List<Matrix> m = b.generate();
 			for (int i = 0; i < matrix.size(); i++) {
 				matrix.get(i).add(m.get(i), offset);
+			}
+			for (Pair o : b.getOp()) {
+				op.add(new Pair(o, offset));
 			}
 			offset += b.getCount();
 			count += b.getCount();
@@ -85,6 +90,14 @@ public class Block {
 
 	public void addCount(int count) {
 		this.count += count;
+	}
+
+	public List<Pair> getOp() {
+		return op;
+	}
+
+	public void setOp(List<Pair> op) {
+		this.op = op;
 	}
 
 	public List<Block> getChildren() {
@@ -131,16 +144,8 @@ public class Block {
 		addTuple(MUL, src, dst, value);
 	}
 
-	public void addOperation(int idx, int vertex, Operation op) {
-		getMatrix().get(idx).getOp().add(new Pair(vertex, op));
-	}
-
-	public void addOperationSum(int vertex, Operation op) {
-		addOperation(SUM, vertex, op);
-	}
-
-	public void addOperationMul(int vertex, Operation op) {
-		addOperation(MUL, vertex, op);
+	public void addOperation(int vertex, Operation op) {
+		getOp().add(new Pair(vertex, op));
 	}
 
 	public void connect(int idx, int output, Block b, int input) {
@@ -161,6 +166,14 @@ public class Block {
 
 	public Matrix getMatrixMul() {
 		return getMatrix().get(MUL);
+	}
+
+	public boolean hasOperation(int vertex) {
+		return op.parallelStream().filter(p -> p.getVertex() == vertex).collect(Collectors.toList()).size() > 0;
+	}
+
+	public Operation getOperation(int vertex) {
+		return op.parallelStream().filter(p -> p.getVertex() == vertex).collect(Collectors.toList()).get(0).getOp();
 	}
 
 }

@@ -14,9 +14,9 @@ public class FMDemod extends Block {
 		addTupleSum(1, 2, 1.0f);
 		addTupleSum(0, 3, 1.0f);
 		addTupleSum(3, 4, 1.0f);
-		addOperationSum(1, Operation.CONJ);
-		addOperationSum(3, Operation.MUL);
-		addOperationSum(4, Operation.ARG);
+		addOperation(1, Operation.CONJ);
+		addOperation(3, Operation.MUL);
+		addOperation(4, Operation.ARG);
 
 	}
 

@@ -16,7 +16,7 @@ public class Scrambler extends Block {
 		}
 		addTupleSum(x0, size, 1.0);
 		addTupleSum(size, 0, 1.0);
-		addOperationSum(size, Operation.XOR);
+		addOperation(size, Operation.XOR);
 
 	}
 

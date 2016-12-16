@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class Matrix {
 	private List<Tuple> matrix = new ArrayList<Tuple>();
-	private List<Pair> op = new ArrayList<Pair>();
 	private Algebra algebra;
 
 	public Matrix(Algebra algebra) {
@@ -21,14 +20,6 @@ public class Matrix {
 		this.matrix = matrix;
 	}
 
-	public List<Pair> getOp() {
-		return op;
-	}
-
-	public void setOp(List<Pair> op) {
-		this.op = op;
-	}
-
 	public void connect(Block a, int output, Block b, int input) {
 		matrix.add(new Tuple(a.getOutput(output), b.getInput(input), 1.0));
 	}
@@ -36,9 +27,6 @@ public class Matrix {
 	public void add(Matrix m, int offset) {
 		for (Tuple t : m.getMatrix()) {
 			matrix.add(new Tuple(t, offset));
-		}
-		for (Pair o : m.getOp()) {
-			op.add(new Pair(o, offset));
 		}
 	}
 
@@ -56,13 +44,5 @@ public class Matrix {
 
 	public void setAlgebra(Algebra algebra) {
 		this.algebra = algebra;
-	}
-
-	public boolean hasOperation(int vertex) {
-		return op.parallelStream().filter(p -> p.getVertex() == vertex).collect(Collectors.toList()).size() > 0;
-	}
-
-	public Operation getOperation(int vertex) {
-		return op.parallelStream().filter(p -> p.getVertex() == vertex).collect(Collectors.toList()).get(0).getOp();
 	}
 }

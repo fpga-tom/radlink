@@ -8,7 +8,7 @@ import org.rad.kernel.Matrix;
 import org.rad.kernel.Pair;
 import org.rad.kernel.Tuple;
 
-public class Tile {
+public class Tile extends Block {
 
 	private int height;
 	private int width;
@@ -30,10 +30,10 @@ public class Tile {
 				}
 			}
 
-			for (Pair t : m.getOp()) {
+			for (Pair t : b.getOp()) {
 				Range r = new Range(tile, height, width);
 				if (r.check(t)) {
-					n.getOp().add(t);
+					getOp().add(t);
 				}
 			}
 		}

@@ -33,8 +33,7 @@ public class BlockBuilder {
 		for (Vertex v : graph.getVertex()) {
 			Operation op = Operation.fromString(v.getValue());
 			if (op != null && op.isUnary()) {
-				result.addOperationSum(v.getId(), op);
-				result.addOperationMul(v.getId(), op);
+				result.addOperation(v.getId(), op);
 			}
 		}
 

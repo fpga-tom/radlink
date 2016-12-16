@@ -1,6 +1,6 @@
 package org.rad.kernel.cpp;
 
-import org.rad.kernel.Matrix;
+import org.rad.kernel.Block;
 import org.rad.kernel.Operation;
 
 public class CppOperation {
@@ -26,9 +26,9 @@ public class CppOperation {
 		return "";
 	}
 
-	public String get(Matrix m, int vertex) {
-		if (m.hasOperation(vertex))
-			return get(m.getOperation(vertex));
+	public String get(Block b, int vertex) {
+		if (b.hasOperation(vertex))
+			return get(b.getOperation(vertex));
 		return "";
 	}
 

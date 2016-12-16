@@ -50,9 +50,9 @@ for(;;) {
 #foreach($m in $l.getMatrix())
 #foreach($t in $m.getMatrix())
 #if ($t.v == $m.algebra.dot.identity)
-	tmpvessel_${l.tile}[$t.j] $CppOperation.get($m.algebra.sum)= $CppOperation.get($m, $t.i) (vessel[$t.i]);
+	tmpvessel_${l.tile}[$t.j] $CppOperation.get($m.algebra.sum)= $CppOperation.get($l, $t.i) (vessel[$t.i]);
 #else
-	tmpvessel_${l.tile}[$t.j] $CppOperation.get($m.algebra.sum)= $CppOperation.get($m, $t.i) (vessel[$t.i]) $CppOperation.get($m.algebra.dot) (float)($t.v);
+	tmpvessel_${l.tile}[$t.j] $CppOperation.get($m.algebra.sum)= $CppOperation.get($l, $t.i) (vessel[$t.i]) $CppOperation.get($m.algebra.dot) (float)($t.v);
 #end
 #end
 
