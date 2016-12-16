@@ -32,19 +32,6 @@ void wait_data_processed() {
 #end
 }
 
-void radlink_begin() {
-//	data_ready = false;
-//	running = true;
-//	bar.wait();
-}
-
-void radlink_end() {
-//	running = false;
-//	data_ready = false;
-}
-
-
-
 #foreach($l in $tiles)
 std::complex<float> tmpvessel_${l.tile}[$block.getCount()] = {0, };
 #end

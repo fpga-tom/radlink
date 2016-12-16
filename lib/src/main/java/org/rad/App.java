@@ -13,7 +13,7 @@ public class App {
 
 	public static void main(String[] argv) throws FileNotFoundException, JAXBException {
 
-		Waveform w = new Waveform(new CppThreadTranslator(4));
+		Waveform w = new Waveform(new CppThreadTranslator(2));
 		// w.add(new FMReceiver());
 		w.add(BlockBuilder.build(JGraphxParser.parseXml("jgraphx.xml")));
 		System.out.println(w.generate());
